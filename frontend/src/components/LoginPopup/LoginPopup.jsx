@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import './LoginPopup.css'
 import assets from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 
 const LoginPopup = ({ setShowLogin }) => {
     const [currState, setCurrState] = useState("Login")
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+
+    const handlesubmit = (e) => {
+        e.preventDefault()
+        axios.post("mongodb://127.0.0.1:27017/SignUp", { name, email, password })
+            .then(result => console.log(result))
+            .catch(err => console.log(err))
+    }
     return (
         <div className='login-popup'>
             <form className="login-popup-container">
@@ -23,8 +34,8 @@ const LoginPopup = ({ setShowLogin }) => {
                     <p>By continuing , i agree to the terms of use & privacy policy.</p>
                 </div>
                 {currState === "Login"
-                    ? <p>Create a new account?<span onClick={()=>setCurrState("Sign Up")}>Click here</span></p>
-                    : <p>Already have an account?<span onClick={()=>setCurrState("Login")}  >Login here</span></p>
+                    ? <p>Create a new account?<span onClick={() => setCurrState("Sign Up")}>Click here</span></p>
+                    : <p>Already have an account?<span onClick={() => setCurrState("Login")}  >Login here</span></p>
                 }
             </form>
         </div>
